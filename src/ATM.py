@@ -55,4 +55,4 @@ class ATM(object):
         returnDict['geocode'] = self.geocode
         return returnDict
 
-print("HELLO")
+print("WIP")
