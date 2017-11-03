@@ -1,3 +1,5 @@
+import requests
+
 class ATM(object):
 
     def __init__(self, jsonData):
@@ -55,4 +57,70 @@ class ATM(object):
         returnDict['geocode'] = self.geocode
         return returnDict
 
-print("WIP")
+class ATMRequest(object):
+
+    def __init__(self, apiKey):
+        self.baseUrl = 'http://api.reimaginebanking.com'
+        self.key = apiKey
+
+    def __buildParams(self, lat, lng, rad):
+        param = {'key': self.key}
+        if (lat == None):
+            param['lat'] = lat
+        if (lng == None):
+            param['lng'] = lng
+        if (rad == None):
+            param['rad'] = rad
+        return param
+
+    def __formatResponse(self, json):
+        respList = []
+        for atm in json['data']:
+            respList.append(ATM(atm))
+        return respList
+
+    def getAtms(self, lat=None, lng=None, rad=None):
+        reqUrl = "%s/atms" % self.baseUrl
+        par = self.__buildParams(lat, lng, rad)
+
+        r = requests.get(reqUrl, params=par)
+        if r.status_code != 200:
+            return (None, r.json())
+
+        jsonAtms = r.json()
+
+        while ('next' in r.json()['paging']):
+            reqUrl = "%s%s" % (self.baseUrl, r.json()['paging']['next'])
+            r = requests.get(reqUrl)
+
+            if r.status_code != 200:
+                return (None, r.json())
+
+            jsonAtms['data'] = jsonAtms['data'] + r.json()['data']
+
+        return (self.__formatResponse(jsonAtms), None)
+
+    def getAtmById(self, idCode):
+        reqUrl = "%s/atms/%s" % (self.baseUrl, idCode)
+        par = {'key': self.key}
+
+        r = requests.get(reqUrl, params=par)
+        if r.status_code != 200:
+            return (None, r.json())
+        
+        return (ATM(r.json()), None)
+
+
+
+def main():
+
+    apiKey = input("Please enter in your Nessie API Key: ")
+    client = ATMRequest(apiKey)
+    # atms = client.getAtms()[0]
+
+    # print(atms[0].atmId)
+    arlingtonAtm = client.getAtmById('56c66be5a73e492741506f2b')[0]
+    print(arlingtonAtm.address)
+
+if __name__ == "__main__":
+    main()
