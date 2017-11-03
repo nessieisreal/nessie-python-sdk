@@ -16,13 +16,14 @@ class CustomerRequests:
 
     # Creates a customer based on parameters
     # Returns a Customer object with CustomerId
+    # TODO: Add error handling
     def createCustomer(self, firstName: str, lastName: str, address):
         header = {"Content-Type":"application/json"}
         payload = {"key":self.getKey()}
         body = {
         "first_name":firstName,
         "last_name":lastName,
-        "address":address.createDict()
+        "address":address.toDict()
         }
         r = requests.post(urlConstants.customersUrl, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
@@ -35,10 +36,11 @@ class CustomerRequests:
         return createdCustomer
 
     # Updates a customer's address based on CustomerId
+    # TODO: Add error handling
     def updateCustomer(self, customerId, newAddress):
         header = {"Content-Type":"application/json"}
         payload = {"key":self.getKey()}
-        body = {"address":newAddress.createDict()}
+        body = {"address":newAddress.toDict()}
         customerUrlwithId = urlConstants.customersIdUrl % customerId
         r = requests.put(customerUrlwithId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
@@ -52,7 +54,7 @@ class CustomerRequests:
 
     # Creates a Customer Object from python dictonary representation
     @staticmethod
-    def customerDictToObj(cust):
+    def __customerDictToObj(cust):
         convertedCustomer = Customer()
         convertedCustomer.setFirstName(cust.get("first_name"))
         convertedCustomer.setLastName(cust.get("last_name"))
@@ -62,6 +64,7 @@ class CustomerRequests:
 
     # Get all customers
     # Returns a list of Customer objects
+    # TODO: Add error handling
     def getAllCustomers(self):
         header = {"Content-Type":"application/json"}
         payload = {"key":self.getKey()}
@@ -69,12 +72,13 @@ class CustomerRequests:
         data = r.json()
         customerList = []
         for cust in data:
-            createdCustomer = CustomerRequests.customerDictToObj(cust)
+            createdCustomer = CustomerRequests.__customerDictToObj(cust)
             customerList.append(createdCustomer)
         return customerList
 
     # Get customer by Customer Id
     # Returns a Customer object with the provided Customer Id
+    # TODO: Add error handling
     def getCustomerById(self, customerId):
         header = {"Content-Type":"application/json"}
         payload = {"key":self.getKey()}
@@ -82,6 +86,6 @@ class CustomerRequests:
         r = requests.get(customerUrlwithId, headers=header, params=payload)
         cust = r.json()
         print(cust)
-        return CustomerRequests.customerDictToObj(cust)
+        return CustomerRequests.__customerDictToObj(cust)
 
 

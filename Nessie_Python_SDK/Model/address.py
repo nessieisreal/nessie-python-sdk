@@ -6,7 +6,7 @@ class Address:
 		self.state = state
 		self.zipcode = zipcode
 
-	def createDict(self):
+	def toDict(self):
 		return {
 			"street_number" : self.streetNumber,
 			"street_name" : self.streetName,
