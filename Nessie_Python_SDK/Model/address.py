@@ -7,10 +7,10 @@ class Address:
 		self.zipcode = zipcode
 
 	def createDict(self):
-		addressDict = {}
-		addressDict["street_number"] = self.streetNumber
-		addressDict["street_name"] = self.streetName
-		addressDict["city"] = self.city
-		addressDict["state"] = self.state
-		addressDict["zip"] = self.zipcode
-		return addressDict
+		return {
+			"street_number" : self.streetNumber,
+			"street_name" : self.streetName,
+			"city" : self.city,
+			"state" : self.state,
+			"zip" : self.zipcode
+			}
