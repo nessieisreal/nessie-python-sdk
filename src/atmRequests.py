@@ -33,7 +33,7 @@ class ATMRequest(object):
         if (lat is not None or lng is not None or rad is not None):
             if (lat is None or lng is None or rad is None):
                 raise ATMValidationError(utils.constants.missingFields)
-            if (lat < -90 or lat > 90 or lng < -180 or lng > 180):
+            if (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0):
                 raise ATMValidationError(utils.constants.invalidFields)
 
 
@@ -47,7 +47,6 @@ class ATMRequest(object):
             raise NessieApiError(r)
 
         jsonAtms = r.json()
-
         while ('next' in r.json()['paging']):
             reqUrl = "%s%s" % (self.baseUrl, r.json()['paging']['next'])
             r = requests.get(reqUrl)
@@ -64,11 +63,6 @@ class ATMRequest(object):
         par = {'key': self.key}
 
         r = requests.get(reqUrl, params=par)
-
-        print(par)
-
-        print('Status Code: %s' % r.status_code)
-        print('Message: %s' % r.reason)
 
         if r.status_code != 200:
             raise NessieApiError(r)
