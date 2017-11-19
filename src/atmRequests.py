@@ -1,7 +1,7 @@
 import requests
 from models.atm import ATM
 import utils.constants
-from utils.validationExceptions import ATMValidationError, ATMClientError
+from utils.exceptions import ATMValidationError, NessieApiError
 
 class ATMRequest(object):
 
@@ -44,7 +44,7 @@ class ATMRequest(object):
 
         r = requests.get(reqUrl, params=par)
         if r.status_code != 200:
-            raise ATMClientError(r)
+            raise NessieApiError(r)
 
         jsonAtms = r.json()
 
@@ -53,7 +53,7 @@ class ATMRequest(object):
             r = requests.get(reqUrl)
 
             if r.status_code != 200:
-                raise ATMClientError(r)
+                raise NessieApiError(r)
 
             jsonAtms['data'] = jsonAtms['data'] + r.json()['data']
 
@@ -71,21 +71,14 @@ class ATMRequest(object):
         print('Message: %s' % r.reason)
 
         if r.status_code != 200:
-            raise ATMClientError(r)
+            raise NessieApiError(r)
         
         return ATM(r.json())
 
 
 
 def main():
-
-    apiKey = input("Please enter in your Nessie API Key: ")
-    client = ATMRequest(apiKey)
-    atms = client.getAtms()
-
-    print('Id of one of the atms: %s' % atms[0].atmId)
-    arlingtonAtm = client.getAtmById('56c66be5a73e492741506f2b')
-    print(arlingtonAtm.address)
+    print("Import this class to use Nessie's ATM APIs!")
 
 if __name__ == "__main__":
     main()

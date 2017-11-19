@@ -11,7 +11,7 @@ class ATMValidationError(Exception):
             'Unrecognized Error'
         super(ATMValidationError, self).__init__(message)
 
-class ATMClientError(Exception):
+class NessieApiError(Exception):
     def __init__(self, response):
         self.code = response.status_code
-        super(ATMClientError, self).__init__(response.text)
+        super(NessieApiError, self).__init__(response.text)
