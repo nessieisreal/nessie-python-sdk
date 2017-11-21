@@ -29,12 +29,15 @@ class ATMRequest(object):
         lat = req.get('lat')
         lng = req.get('lng')
         rad = req.get('rad')
-
-        if (lat is not None or lng is not None or rad is not None):
-            if (lat is None or lng is None or rad is None):
-                raise ATMValidationError(utils.constants.missingFields)
-            if (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0):
-                raise ATMValidationError(utils.constants.invalidFields)
+        
+        paramsExist = lat is not None or lng is not None or rad is not None
+        paramsMissing = lat is None or lng is None or rad is None
+        paramsInvalid = not paramsMissing and (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0)
+        
+        if (paramsExist and paramsMissing):
+            raise ATMValidationError(utils.constants.missingFields)
+        if (paramsInvalid):
+            raise ATMValidationError(utils.constants.invalidFields)
 
 
     def getAtms(self, lat=None, lng=None, rad=None):

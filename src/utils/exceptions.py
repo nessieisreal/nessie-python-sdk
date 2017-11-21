@@ -8,7 +8,7 @@ class ATMValidationError(Exception):
         elif(code == constants.invalidFields):
             message = 'Request contains invalid fields. Lat must be between -90 and 90. Lng must be between -180 and 180.'
         else:
-            'Unrecognized Error'
+            message = 'Unrecognized Error'
         super(ATMValidationError, self).__init__(message)
 
 class NessieApiError(Exception):
