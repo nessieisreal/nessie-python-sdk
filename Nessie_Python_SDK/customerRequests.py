@@ -1,4 +1,6 @@
-import requests, utils.constants, json
+import requests
+import utils.constants
+import json
 from models.customer import Customer
 
 
@@ -12,68 +14,64 @@ class CustomerRequests:
     # Get customer for an Account
     # Returns a Customer object who owns the AccountId
     # TODO: Add error handling
-    def getCustomerByAccountId(self, accountId):
-        header = {"Content-Type":"application/json"}
-        payload = {"key":self.key}
-        customerUrlwithId = utils.constants.accountsCustomerIdUrl % accountId
-        r = requests.get(customerUrlwithId, headers=header, params=payload)
-        cust = r.json()
-        print(cust)
-        return Customer(cust)
+    def getCustomerByAccountId(self, account_id):
+        header = {"Content-Type": "application/json"}
+        payload = {"key": self.key}
+        url = utils.constants.accountsCustomerIdUrl % account_id
+        r = requests.get(url, headers=header, params=payload)
+        return Customer(r.json())
 
     # Get all customers
     # Returns a list of Customer objects
     # TODO: Add error handling
     def getAllCustomers(self):
-        header = {"Content-Type":"application/json"}
-        payload = {"key":self.key}
+        header = {"Content-Type": "application/json"}
+        payload = {"key": self.key}
         r = requests.get(utils.constants.customersUrl, headers=header, params=payload)
         data = r.json()
-        customerList = []
-        for cust in data:
-            customerList.append(Customer(cust))
-        return customerList
+        customer_list = []
+        for c in data:
+            customer_list.append(Customer(c))
+        return customer_list
 
     # Get customer by Customer Id
     # Returns a Customer object with the provided Customer Id
     # TODO: Add error handling
-    def getCustomerById(self, customerId):
-        header = {"Content-Type":"application/json"}
-        payload = {"key":self.key}
-        customerUrlwithId = utils.constants.customersIdUrl % customerId
-        r = requests.get(customerUrlwithId, headers=header, params=payload)
-        cust = r.json()
-        print(cust)
-        return Customer(cust)
+    def getCustomerById(self, customer_id):
+        header = {"Content-Type": "application/json"}
+        payload = {"key": self.key}
+        url = utils.constants.customersIdUrl % customer_id
+        r = requests.get(url, headers=header, params=payload)
+        return Customer(r.json())
 
     # Creates a customer based on parameters
     # Returns a Customer object with CustomerId
     # TODO: Add error handling
-    def createCustomer(self, firstName: str, lastName: str, address):
+    def createCustomer(self, first_name: str, last_name: str, address):
         header = {"Content-Type":"application/json"}
         payload = {"key":self.key}
         body = {
-        "first_name":firstName,
-        "last_name":lastName,
-        "address":address.toDict()
+            "first_name": first_name,
+            "last_name": last_name,
+            "address": address.to_dict()
         }
         r = requests.post(utils.constants.customersUrl, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
-        createdCustomer = Customer()
-        createdCustomer.firstName = firstName
-        createdCustomer.lastName = lastName
-        createdCustomer.address = address
-        createdCustomer.customerId = data.get("objectCreated").get("_id")
-        return createdCustomer
+        created_customer = Customer()
+        created_customer.first_name = first_name
+        created_customer.last_name = last_name
+        created_customer.address = address
+        created_customer.customer_id = data.get("objectCreated").get("_id")
+        return created_customer
 
     # Updates a customer's address based on CustomerId
     # TODO: Add error handling
-    def updateCustomer(self, customerId, newAddress):
-        header = {"Content-Type":"application/json"}
-        payload = {"key":self.key}
-        body = {"address":newAddress.toDict()}
-        customerUrlwithId = utils.constants.customersIdUrl % customerId
-        r = requests.put(customerUrlwithId, headers=header, params=payload, data=json.dumps(body))
+    def updateCustomer(self, customer_id, new_address):
+        header = {"Content-Type": "application/json"}
+        payload = {"key": self.key}
+        body = {"address": new_address.to_dict()}
+        url = utils.constants.customersIdUrl % customer_id
+        r = requests.put(url, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         print(data)
         if data.get("code") == 202:
