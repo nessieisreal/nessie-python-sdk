@@ -12,7 +12,7 @@ Install python 3.6.2 or greater
 Setup virtual python environment
 
     pip install pipenv
-    pip
+    pipenv install
 
 To add packages
 
