@@ -11,12 +11,14 @@ class Bill():
     
     def get_account_bills(self, account_id):
         url = f'{self.base_url}/accounts/{account_id}/bills/?key={self.key}'
+        raise NotImplementedError
         pass
 
 
     # Get the bill using the bill_id
     # will return
-    
+    # TODO: better way of error handling
+    # TODO: better way of appending id
     def get_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}?key={self.key}' 
         # "/customers/56c66be5a73e492741507273/bills?key="
@@ -24,8 +26,12 @@ class Bill():
         # if (response.status_code != 200):
         #    error_handle(response)
         result = response.json()
-        result['bill_id']=result['_id']
-        del result['_id']
+        # need to refactor better
+        try:
+            result['bill_id']=result['_id']
+            del result['_id']
+        except KeyError:
+            pass
         return result
 
     def get_customer_bills(self, customer_id):
@@ -33,6 +39,20 @@ class Bill():
         response = requests.get(url)
         #error_handle(response)
         return response.json()
+
+    def get_account_bills(self, account_id):
+        url = f'{self.base_url}/accounts/{customer_id}/bills?key={self.key}'
+        response = requests.get(url)
+        return response.json()
+
+    def create_bill(self, account_id ):
+        pass
+
+    def update_bill(self, bill_id):
+        pass
+
+    def delete_bill(self, bill_id):
+        pass
 
 
 def error_handle(error_response):
