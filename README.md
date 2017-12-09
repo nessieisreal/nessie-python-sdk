@@ -23,3 +23,10 @@ More info about pipenv: http://python-docs.readthedocs.io/en/latest/dev/virtuale
 To run test package
 
     pipenv run python ./src/atmRequests.py
+
+
+## Deploying to pip
+
+http://peterdowns.com/posts/first-time-with-pypi.html
+
+Note make sure not to save the .pypirc file with the pip password lol
