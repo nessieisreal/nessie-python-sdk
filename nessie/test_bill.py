@@ -1,5 +1,5 @@
-import bill
 import unittest
+import bill
 
 class TestBill(unittest.TestCase):
 
