@@ -4,6 +4,6 @@ python:
  - "3.6"
 # need to refactor to requirements/ setup
 install:
- - pip install json
+ - echo "skip"
 script:
  - pylint nessie
