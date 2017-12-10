@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
     name = 'nessie',
     packages = ['nessie'],
-    version = '0.0.0.An',
+    version = '0.0.0',
     description = 'Nessie python test lib',
     author = 'Wesley Lin',
     author_email = 'wesleylin625@gmail.com',
