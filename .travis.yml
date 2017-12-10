@@ -1,0 +1,9 @@
+language: python
+python:
+ - "3.5"
+ - "3.6"
+# need to refactor to requirements/ setup
+install:
+ - pip install json
+script:
+ - pylint nessie
