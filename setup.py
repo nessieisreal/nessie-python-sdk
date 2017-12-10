@@ -1,8 +1,8 @@
-from disutils.core import setup
+from distutils.core import setup
 setup(
     name = 'nessie',
     packages = ['nessie'],
-    version = '0.0.0',
+    version = '0.0.0.An',
     description = 'Nessie python test lib',
     author = 'Wesley Lin',
     author_email = 'wesleylin625@gmail.com',
