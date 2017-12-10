@@ -51,7 +51,9 @@ To install it:
 
 Testing on windows
 
-Create new repo
+    //Create new repo
+    mkdir test-install-nessie
+    cd test-install-nessie
 
     // create virtual environment
     python -m venv .
@@ -61,3 +63,5 @@ Create new repo
 
     // install from test pip location
     pip install --index-url https://test.pypi.org/simple/ nessie
+
+    
