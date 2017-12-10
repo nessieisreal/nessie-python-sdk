@@ -27,6 +27,17 @@ To run test package
 
 ## Deploying to pip
 
-http://peterdowns.com/posts/first-time-with-pypi.html
+https://packaging.python.org/tutorials/distributing-packages/
+https://packaging.python.org/guides/using-testpypi/#using-test-pypi
 
 Note make sure not to save the .pypirc file with the pip password lol
+
+
+    python setup.py sdist
+
+
+The account is **nessie**
+
+Notes theres two separate pypi. A fake test at test.pypi.org and a real one.
+
+For obvious reasons the password to the real pypi.org is not placed here.
