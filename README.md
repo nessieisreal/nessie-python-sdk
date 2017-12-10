@@ -32,8 +32,11 @@ https://packaging.python.org/guides/using-testpypi/#using-test-pypi
 
 Note make sure not to save the .pypirc file with the pip password lol
 
-
+    // builds the tar file at dist/nessie-<version>.tar.gz stored in setup.py
     python setup.py sdist
+
+    // uploads it to the test pip repo
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 
 The account is **nessie**
@@ -41,3 +44,20 @@ The account is **nessie**
 Notes theres two separate pypi. A fake test at test.pypi.org and a real one.
 
 For obvious reasons the password to the real pypi.org is not placed here.
+
+To install it:
+
+    pip install --index-url https://test.pypi.org/simple/ nessie
+
+Testing on windows
+
+Create new repo
+
+    // create virtual environment
+    python -m venv .
+
+    // activate virtual environment
+    Scripts\activate
+
+    // install from test pip location
+    pip install --index-url https://test.pypi.org/simple/ nessie
