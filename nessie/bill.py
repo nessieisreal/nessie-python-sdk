@@ -45,13 +45,18 @@ class Bill():
         response = requests.get(url)
         return response.json()
 
-    def create_bill(self, account_id ):
-        pass
+    #
+    def create_bill(self, account_id, bill):
+        url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
+        response = requests.post(url,json=bill)
+        return
 
     def update_bill(self, bill_id):
+        url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
         pass
 
     def delete_bill(self, bill_id):
+        url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
         pass
 
 
