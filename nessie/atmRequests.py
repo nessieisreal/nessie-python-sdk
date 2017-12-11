@@ -35,9 +35,9 @@ class ATMRequest(object):
         paramsInvalid = not paramsMissing and (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0)
         
         if (paramsExist and paramsMissing):
-            raise ATMValidationError(utils.constants.missingFields)
+            raise ATMValidationError(utils.constants.atmMissingFields)
         if (paramsInvalid):
-            raise ATMValidationError(utils.constants.invalidFields)
+            raise ATMValidationError(utils.constants.atmInvalidFields)
 
 
     def getAtms(self, lat=None, lng=None, rad=None):
