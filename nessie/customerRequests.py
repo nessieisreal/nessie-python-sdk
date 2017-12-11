@@ -73,7 +73,6 @@ class CustomerRequests:
         url = utils.constants.customersIdUrl % customer_id
         r = requests.put(url, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
-        print(data)
         if data.get("code") == 202:
             return True
         else:
