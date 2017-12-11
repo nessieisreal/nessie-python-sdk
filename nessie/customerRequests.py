@@ -2,6 +2,7 @@ import requests
 import utils.constants
 import json
 from models.customer import Customer
+from utils.exceptions import ATMValidationError, NessieApiError
 
 
 class CustomerRequests:
@@ -13,8 +14,7 @@ class CustomerRequests:
 
     # Get customer for an Account
     # Returns a Customer object who owns the AccountId
-    # TODO: Add error handling
-    def getCustomerByAccountId(self, account_id):
+    def get_customers_by_account_id(self, account_id):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         url = utils.constants.accountsCustomerIdUrl % account_id
@@ -23,11 +23,12 @@ class CustomerRequests:
 
     # Get all customers
     # Returns a list of Customer objects
-    # TODO: Add error handling
-    def getAllCustomers(self):
+    def get_all_customers(self):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.get(utils.constants.customersUrl, headers=header, params=payload)
+        if r.status_code != 200:
+            raise NessieApiError(r)
         data = r.json()
         customer_list = []
         for c in data:
@@ -36,26 +37,28 @@ class CustomerRequests:
 
     # Get customer by Customer Id
     # Returns a Customer object with the provided Customer Id
-    # TODO: Add error handling
-    def getCustomerById(self, customer_id):
+    def get_customer_by_id(self, customer_id):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         url = utils.constants.customersIdUrl % customer_id
         r = requests.get(url, headers=header, params=payload)
+        if r.status_code != 200:
+            raise NessieApiError(r)
         return Customer(r.json())
 
     # Creates a customer based on parameters
     # Returns a Customer object with CustomerId
-    # TODO: Add error handling
-    def createCustomer(self, first_name: str, last_name: str, address):
-        header = {"Content-Type":"application/json"}
-        payload = {"key":self.key}
+    def create_customer(self, first_name: str, last_name: str, address):
+        header = {"Content-Type": "application/json"}
+        payload = {"key": self.key}
         body = {
             "first_name": first_name,
             "last_name": last_name,
             "address": address.to_dict()
         }
         r = requests.post(utils.constants.customersUrl, headers=header, params=payload, data=json.dumps(body))
+        if r.status_code != 200:
+            raise NessieApiError(r)
         data = r.json()
         created_customer = Customer()
         created_customer.first_name = first_name
@@ -65,17 +68,13 @@ class CustomerRequests:
         return created_customer
 
     # Updates a customer's address based on CustomerId
-    # TODO: Add error handling
-    def updateCustomer(self, customer_id, new_address):
+    def update_customer(self, customer_id, new_address):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         body = {"address": new_address.to_dict()}
         url = utils.constants.customersIdUrl % customer_id
         r = requests.put(url, headers=header, params=payload, data=json.dumps(body))
-        data = r.json()
-        if data.get("code") == 202:
-            return True
+        if r.status_code != 202:
+            raise NessieApiError(r)
         else:
-            # Prints the error response if not success
-            print(data)
-            return False
+            return True

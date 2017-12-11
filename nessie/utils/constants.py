@@ -6,5 +6,7 @@ customersIdUrl = customersUrl + "/%s"
 accountsCustomerIdUrl = accountsUrl + "/%s/customer"
 
 # Exception Messages
-missingFields = 1
-invalidFields = 2
+atmMissingFields = 1
+atmInvalidFields = 2
+customerMissingFields = 3
+customerInvalidFields = 4
