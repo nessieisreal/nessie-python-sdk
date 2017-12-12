@@ -1,0 +1,8 @@
+language: python
+python:
+ - "3.6"
+# need to refactor to requirements/ setup
+install:
+ - pipenv install --dev
+script:
+ - pylint nessie
