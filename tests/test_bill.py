@@ -1,5 +1,8 @@
 import unittest
-from nessie.billRequests import BillRequest
+
+import nessie
+from nessie import billRequests
+from billRequests import BillRequest
 
 class TestBillRequests(unittest.TestCase):
 
