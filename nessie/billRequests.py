@@ -1,6 +1,8 @@
 import json
 import requests
 
+from nessie.models.bill import Bill
+
 class BillRequest():
 
     # perhaps need better way of injecting key?
