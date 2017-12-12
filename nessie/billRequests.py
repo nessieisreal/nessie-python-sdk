@@ -48,10 +48,15 @@ class BillRequest():
         return response.json()
 
     #
-    def create_bill(self, account_id, bill):
+    def create_bill_json(self, account_id, bill):
         url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
         response = requests.post(url,json=bill) # change json to Bill class??
         return Bill(response.json())
+
+    def create_bill(self, account_id:str , status:str, payee:str, 
+        nickname:str, payment_date:str, recurring_date:int, payment_amount:int):
+        self.create_bill_json(account_id)
+
 
     def update_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
