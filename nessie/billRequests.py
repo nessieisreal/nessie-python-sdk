@@ -1,7 +1,7 @@
 import json
 import requests
 
-class Bill():
+class BillRequest():
 
     # perhaps need better way of injecting key?
     def __init__(self, key):
@@ -48,16 +48,18 @@ class Bill():
     #
     def create_bill(self, account_id, bill):
         url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
-        response = requests.post(url,json=bill)
+        response = requests.post(url,json=bill) # change json to Bill class??
         return
 
     def update_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
-        pass
+        response = requests.put(url)
+        return response.json()
 
     def delete_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
-        pass
+        response = requests.delete(url)
+        return response.json()
 
 
 def error_handle(error_response):
