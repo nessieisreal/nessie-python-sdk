@@ -6,7 +6,6 @@ from nessie import billRequests
 class TestBillRequests(unittest.TestCase):
 
     def test_get_bill_succeed(self):
-        print("test succeed")
         bill_factory = billRequests.BillRequest("24bb950537c1164a2fbb1bf2a37c3267")
         result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
         expected_result = {'bill_id': '5a261c3883a71c405074fcbd', 'status': 'pending', 'payee': 'string', 'nickname': 'string', 'payment_date': '2017-12-05', 'recurring_date': 1, 'payment_amount': 23, 'creation_date': '2017-12-05', 'account_id': '5a261a0483a71c405074fcbc'}
@@ -24,4 +23,8 @@ class TestBillRequests(unittest.TestCase):
         result = bill_factory.get_bill("fake")
         expected_result = {'code':401, 'message':'unauthorized'}
         self.assertEqual(result, expected_result)
+
+    def test_create_bill(self):
+        bill_factory = billRequests.BillRequest("24bb950537c11642fbb1bf2a37c3267")
+
         

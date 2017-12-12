@@ -51,7 +51,7 @@ class BillRequest():
     def create_bill(self, account_id, bill):
         url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
         response = requests.post(url,json=bill) # change json to Bill class??
-        return
+        return Bill(response.json())
 
     def update_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}/bills?key={self.key}'
@@ -69,6 +69,5 @@ def error_handle(error_response):
 
 b = BillRequest('24bb950537c1164a2fbb1bf2a37c3267')
 bi = b.get_bill("5a261c3883a71c405074fcbd")
-print(bi)
 # r = b.get_customer_bills("5a2614e483a71c405074fcba")
 # print(r)
