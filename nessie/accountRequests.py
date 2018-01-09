@@ -1,5 +1,5 @@
 import requests, json, urlConstants
-from Model.account import Account
+from nessie.models.account import Account
 
 class AccountRequests:
     def __init__(self, apiKey):
