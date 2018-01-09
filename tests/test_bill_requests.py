@@ -1,30 +1,60 @@
 import unittest
+import sys, os
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0,path+'/../')
 
-import nessie
+from nessie.accountRequests import AccountRequests
 from nessie import billRequests
+from nessie.dataRequests import DataRequest
+
+
+# def test_create_bill(self):
+#     bill_factory = billRequests.BillRequest("wkey")
+
+wkey = '7e9b72fdb7b286fcd0aae87deb0e09a2'
+
+# customer_id = '5a546ffd6514d52c7774a2ca'
+# account_factory = AccountRequests(wkey)
+# account_factory.createCustomerAccount(customer_id)
+
+# premade account id
+account_id = '5a5471796514d52c7774a2cb'
 
 class TestBillRequests(unittest.TestCase):
+    # create some dummy bills
+    def setUp(self):
+        bill_factory = billRequests.BillRequest(wkey)
+        bill = bill_factory.create_bill(account_id,
+            status='pending',
+            payee='bobby',
+            nickname='bob',
+            payment_date='2018-01-10',
+            recurring_date=1,
+            payment_amount=10
+        )
+
+    def tearDown(self):
+        data_deletor = DataRequest(wkey)
+        response = data_deletor.delete_data('Bills')
+        print(response)
 
     def test_get_bill_succeed(self):
-        bill_factory = billRequests.BillRequest("24bb950537c1164a2fbb1bf2a37c3267")
-        result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
-        expected_result = {'bill_id': '5a261c3883a71c405074fcbd', 'status': 'pending', 'payee': 'string', 'nickname': 'string', 'payment_date': '2017-12-05', 'recurring_date': 1, 'payment_amount': 23, 'creation_date': '2017-12-05', 'account_id': '5a261a0483a71c405074fcbc'}
-        self.assertEqual(result, expected_result)
+        bill_factory = billRequests.BillRequest(wkey)
+        result = bill_factory.get_account_bills(account_id)
+        print(result)
+        # result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
+        # expected_result = {'bill_id': '5a261c3883a71c405074fcbd', 'status': 'pending', 'payee': 'string', 'nickname': 'string', 'payment_date': '2017-12-05', 'recurring_date': 1, 'payment_amount': 23, 'creation_date': '2017-12-05', 'account_id': '5a261a0483a71c405074fcbc'}
+        self.assertEqual(result[0]['payment_date'], '208-01-10')
 
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
-        bill_factory = billRequests.BillRequest("24bb950537c11642fbb1bf2a37c3267")
-        # err = {}
-        # try:
-        #     result = bill_factory.get_bill("fake")
-        # except Exception as err:
+        bill_factory = billRequests.BillRequest(wkey)
 
-        #     pass
         result = bill_factory.get_bill("fake")
-        expected_result = {'code':401, 'message':'unauthorized'}
+        expected_result = {'code':404, 'message':'Invalid ID'}
+        # {'code':401, 'message':'unauthorized'}
         self.assertEqual(result, expected_result)
 
-    def test_create_bill(self):
-        bill_factory = billRequests.BillRequest("24bb950537c11642fbb1bf2a37c3267")
+
 
         
