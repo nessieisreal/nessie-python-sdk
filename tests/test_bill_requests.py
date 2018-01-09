@@ -36,7 +36,6 @@ class TestBillRequests(unittest.TestCase):
     def tearDown(self):
         data_deletor = DataRequest(wkey)
         response = data_deletor.delete_data('Bills')
-        print(response)
 
     def test_get_bill_succeed(self):
         bill_factory = billRequests.BillRequest(wkey)
@@ -44,7 +43,7 @@ class TestBillRequests(unittest.TestCase):
         print(result)
         # result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
         # expected_result = {'bill_id': '5a261c3883a71c405074fcbd', 'status': 'pending', 'payee': 'string', 'nickname': 'string', 'payment_date': '2017-12-05', 'recurring_date': 1, 'payment_amount': 23, 'creation_date': '2017-12-05', 'account_id': '5a261a0483a71c405074fcbc'}
-        self.assertEqual(result[0]['payment_date'], '208-01-10')
+        self.assertEqual(result[0]['payment_date'], '2018-01-10')
 
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
