@@ -15,7 +15,7 @@ class CustomerRequests:
 
     # Get customer for an Account
     # Returns a Customer object who owns the AccountId
-    def get_customers_by_account_id(self, account_id):
+    def get_customer_by_account_id(self, account_id):
         if account_id is None:
             raise CustomerValidationError(utils.constants.customerIdMissingField)
         header = {"Content-Type": "application/json"}
