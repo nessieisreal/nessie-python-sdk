@@ -1,5 +1,6 @@
 import requests, json, urlConstants
 from nessie.models.account import Account
+from nessie.utils.exceptions import NessieApiError
 
 class AccountRequests:
     def __init__(self, apiKey):
@@ -53,7 +54,7 @@ class AccountRequests:
         r = requests.post(urlConstants.CUSTOMERS_ID_URL % customerId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         if data.get("code") != 201:
-            raise Exception(r.text)
+            raise NessieApiError(r.text)
         return Account.fromJson(data.get("objectCreated"))
 
     def updateAccount(self, accountId, nickname, account_number=None):
@@ -67,7 +68,7 @@ class AccountRequests:
         r = requests.put(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         if data.get("code") != 202:
-            raise Exception(r.text)
+            raise NessieApiError(r.text)
 
     def deleteAccount(self, accountId):
         header = {"Content-Type": "application/json"}
