@@ -9,4 +9,8 @@ script:
 # have pylint only show warnings and errors
 # and ignore regular syntax errors
  - pylint --disable=R,C nessie
+<<<<<<< HEAD
  - python -m unittest
+=======
+ - python -m unittest
+>>>>>>> account

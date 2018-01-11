@@ -1,5 +1,6 @@
 import requests, json, urlConstants
 from nessie.models.account import Account
+from nessie.utils.exceptions import NessieApiError
 
 class AccountRequests:
     def __init__(self, apiKey):
@@ -35,13 +36,13 @@ class AccountRequests:
             accounts.append(Account.fromJson(account))
         return accounts
 
-    def createCustomerAccount(self, customerId, type, nickname, rewards, balance, account_number=None):
+    def createCustomerAccount(self, customerId, account_type, nickname, rewards, balance, account_number=None):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
-        if not Account.typeIsValid(type):
-            raise ValueError("Account type is '{}', but it must be one of: {}".format(type, str(Account.TYPES)))
+        if not Account.typeIsValid(account_type):
+            raise ValueError("Account type is '{}', but it must be one of: {}".format(account_type, str(Account.TYPES)))
         body = {
-            "type": type,
+            "type": account_type,
             "nickname": nickname,
             "rewards": rewards,
             "balance": balance
@@ -53,7 +54,7 @@ class AccountRequests:
         r = requests.post(urlConstants.CUSTOMERS_ID_URL % customerId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         if data.get("code") != 201:
-            raise Exception(r.text)
+            raise NessieApiError(r.text)
         return Account.fromJson(data.get("objectCreated"))
 
     def updateAccount(self, accountId, nickname, account_number=None):
@@ -67,9 +68,13 @@ class AccountRequests:
         r = requests.put(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         if data.get("code") != 202:
-            raise Exception(r.text)
+            raise NessieApiError(r.text)
 
     def deleteAccount(self, accountId):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.delete(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload)
+        data = r.json()
+        if data.get("code") != 202:
+            raise NessieApiError(r.text)
+
