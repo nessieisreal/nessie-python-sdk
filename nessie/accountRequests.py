@@ -74,3 +74,7 @@ class AccountRequests:
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.delete(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload)
+        data = r.json()
+        if data.get("code") != 202:
+            raise NessieApiError(r.text)
+
