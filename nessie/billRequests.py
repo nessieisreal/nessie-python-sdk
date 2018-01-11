@@ -9,12 +9,6 @@ class BillRequest():
     def __init__(self, key):
         self.base_url = "http://api.reimaginebanking.com"
         self.key = key
-    
-    def get_account_bills(self, account_id):
-        url = f'{self.base_url}/accounts/{account_id}/bills/?key={self.key}'
-        response = requests.get(url)
-        result = response.json()
-
 
     # Get the bill using the bill_id
     # will return
