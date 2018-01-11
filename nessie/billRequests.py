@@ -9,18 +9,17 @@ class BillRequest():
     def __init__(self, key):
         self.base_url = "http://api.reimaginebanking.com"
         self.key = key
-        pass
     
     def get_account_bills(self, account_id):
         url = f'{self.base_url}/accounts/{account_id}/bills/?key={self.key}'
-        raise NotImplementedError
-        pass
+        response = requests.get(url)
+        result = response.json()
 
 
     # Get the bill using the bill_id
     # will return
-    # TODO: better way of error handling
-    # TODO: better way of appending id
+    # TODOX: better way of error handling
+    # TODOX: better way of appending id
     def get_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}?key={self.key}' 
         # "/customers/56c66be5a73e492741507273/bills?key="
