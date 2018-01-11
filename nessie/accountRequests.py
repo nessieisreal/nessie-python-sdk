@@ -36,13 +36,13 @@ class AccountRequests:
             accounts.append(Account.fromJson(account))
         return accounts
 
-    def createCustomerAccount(self, customerId, type, nickname, rewards, balance, account_number=None):
+    def createCustomerAccount(self, customerId, account_type, nickname, rewards, balance, account_number=None):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
-        if not Account.typeIsValid(type):
-            raise ValueError("Account type is '{}', but it must be one of: {}".format(type, str(Account.TYPES)))
+        if not Account.typeIsValid(account_type):
+            raise ValueError("Account type is '{}', but it must be one of: {}".format(account_type, str(Account.TYPES)))
         body = {
-            "type": type,
+            "type": account_type,
             "nickname": nickname,
             "rewards": rewards,
             "balance": balance
