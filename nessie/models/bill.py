@@ -14,16 +14,16 @@ class Bill():
     def to_dict(self):
         return vars(self)
 
-"""
-{
-  "_id": "string",
-  "status": "pending",
-  "payee": "string",
-  "nickname": "string",
-  "creation_date": "2017-12-11",
-  "payment_date": "2017-12-11",
-  "recurring_date": 0,
-  "upcoming_payment_date": "2017-12-11",
-  "account_id": "string"
-}
-"""
+# """
+# {
+#   "_id": "string",
+#   "status": "pending",
+#   "payee": "string",
+#   "nickname": "string",
+#   "creation_date": "2017-12-11",
+#   "payment_date": "2017-12-11",
+#   "recurring_date": 0,
+#   "upcoming_payment_date": "2017-12-11",
+#   "account_id": "string"
+# }
+# """

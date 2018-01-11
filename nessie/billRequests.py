@@ -1,4 +1,3 @@
-import json
 import requests
 
 from nessie.models.bill import Bill
@@ -12,8 +11,8 @@ class BillRequest():
 
     # Get the bill using the bill_id
     # will return
-    # TODOX: better way of error handling
-    # TODOX: better way of appending id
+    # TODA: better way of error handling
+    # TODA: better way of appending id
     def get_bill(self, bill_id):
         url = f'{self.base_url}/bills/{bill_id}?key={self.key}' 
         # "/customers/56c66be5a73e492741507273/bills?key="
