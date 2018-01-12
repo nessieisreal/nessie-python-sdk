@@ -8,7 +8,9 @@ from nessie.models.account import Account
 
 class TestAccountRequests(unittest.TestCase):
     # copied pasted accounts main into test case
-    def test_accounts(self):
+    # named skip right now to skip testing it
+    # change back to test_accounts when want to test it
+    def skip_accounts(self):
         accReq = AccountRequests("e7131ca32d226c905701fcca6ab9ad13")
 
         print("===All Accounts===")
