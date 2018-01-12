@@ -9,6 +9,7 @@ class Bill():
         self.creation_date = _json["creation_date"]
         self.payment_date = _json["payment_date"]
         self.recurring_date = _json["recurring_date"]
+        self.upcoming_payment_date = _json["upcoming_payment_date"]
         self.account_id = _json["account_id"]
 
     def to_dict(self):
