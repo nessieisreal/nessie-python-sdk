@@ -38,8 +38,7 @@ class ATMRequest(object):
             raise ATMValidationError(nessie.utils.constants.missingFields)
         if (paramsInvalid):
             raise ATMValidationError(nessie.utils.constants.invalidFields)
-
-
+            
     def getAtms(self, lat=None, lng=None, rad=None):
         reqUrl = "%s/atms" % self.baseUrl
         par = self.__buildParams(lat, lng, rad)
