@@ -107,5 +107,15 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# IntelliJ files
+.idea/
+*.iml
+
+# macOS folder structure
+.DS_Store
+
+apikey.txt
+
 # pip ignore password
 .pypirc
+
