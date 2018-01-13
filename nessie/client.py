@@ -1,5 +1,8 @@
 import os
-from nessie.customerRequests import customerRequests
+from nessie.customerRequests import CustomerRequests
+from nessie.accountRequests import AccountRequests
+
+from nessie.billRequests import BillRequest
 
 class Client():
     def __init__(self, nessie_api_key=None):
@@ -9,7 +12,6 @@ class Client():
         else:
             self.key = nessie_api_key
             
-        
-            
-    def get_customers(self):
+        self.account = AccountRequests(self.key)
+        self.bill = BillRequest(self.key)
         
