@@ -1,12 +1,12 @@
 import requests
-from models.atm import ATM
-import utils.constants
-from utils.exceptions import ATMValidationError, NessieApiError
+from nessie.models.atm import ATM
+import nessie.utils.constants
+from nessie.utils.exceptions import ATMValidationError, NessieApiError
 
 class ATMRequest(object):
 
     def __init__(self, apiKey):
-        self.baseUrl = utils.constants.baseUrl
+        self.baseUrl = nessie.utils.constants.baseUrl
         self.key = apiKey
 
     def __buildParams(self, lat, lng, rad):
@@ -35,9 +35,16 @@ class ATMRequest(object):
         paramsInvalid = not paramsMissing and (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0)
         
         if (paramsExist and paramsMissing):
+<<<<<<< HEAD
             raise ATMValidationError(utils.constants.atmMissingFields)
         if (paramsInvalid):
             raise ATMValidationError(utils.constants.atmInvalidFields)
+=======
+            raise ATMValidationError(nessie.utils.constants.missingFields)
+        if (paramsInvalid):
+            raise ATMValidationError(nessie.utils.constants.invalidFields)
+
+>>>>>>> bills
 
     def getAtms(self, lat=None, lng=None, rad=None):
         reqUrl = "%s/atms" % self.baseUrl

@@ -1,4 +1,4 @@
-import utils.constants
+from nessie.utils import constants
 
 
 class ATMValidationError(Exception):

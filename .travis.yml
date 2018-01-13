@@ -3,6 +3,10 @@ python:
  - "3.6"
 # need to refactor to requirements/ setup
 install:
+ - pip install pipenv
  - pipenv install --dev
 script:
- - pylint nessie
+# have pylint only show warnings and errors
+# and ignore regular syntax errors
+ - pylint --disable=R,C nessie
+ - python -m unittest
