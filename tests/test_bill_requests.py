@@ -38,6 +38,7 @@ class TestBillRequests(unittest.TestCase):
         response = data_deletor.delete_data('Bills')
 
     def test_get_bill_succeed(self):
+        print("test_get_bill_succeed")
         bill_factory = billRequests.BillRequest(wkey)
         result = bill_factory.get_account_bills(account_id)
         print(result)
@@ -47,6 +48,7 @@ class TestBillRequests(unittest.TestCase):
 
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
+        print("test_get_nonreal_bill_fail")
         bill_factory = billRequests.BillRequest(wkey)
 
         result = bill_factory.get_bill("fake")
