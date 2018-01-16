@@ -4,14 +4,14 @@ path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,path+'/../')
 
 from nessie.accountRequests import AccountRequests
-from nessie import billRequests
+from nessie.billRequests import BillRequest
 from nessie.dataRequests import DataRequest
+from nessie.client import Client
 
 
 # def test_create_bill(self):
 #     bill_factory = billRequests.BillRequest("wkey")
 
-wkey = '7e9b72fdb7b286fcd0aae87deb0e09a2'
 
 # customer_id = '5a546ffd6514d52c7774a2ca'
 # account_factory = AccountRequests(wkey)
@@ -23,7 +23,10 @@ account_id = '5a5471796514d52c7774a2cb'
 class TestBillRequests(unittest.TestCase):
     # create some dummy bills
     def setUp(self):
-        bill_factory = billRequests.BillRequest(wkey)
+        # implicitly get NESSIE_API_KEY from env
+        self.client = Client()
+        
+        bill_factory = self.client.bill
         bill = bill_factory.create_bill(account_id,
             status='pending',
             payee='bobby',
@@ -34,12 +37,12 @@ class TestBillRequests(unittest.TestCase):
         )
 
     def tearDown(self):
-        data_deletor = DataRequest(wkey)
+        data_deletor = client.data
         response = data_deletor.delete_data('Bills')
 
     def test_get_bill_succeed(self):
         print("test_get_bill_succeed")
-        bill_factory = billRequests.BillRequest(wkey)
+        bill_factory = self.client.bill
         result = bill_factory.get_account_bills(account_id)
         print(result)
         # result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
@@ -49,7 +52,7 @@ class TestBillRequests(unittest.TestCase):
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
         print("test_get_nonreal_bill_fail")
-        bill_factory = billRequests.BillRequest(wkey)
+        bill_factory = self.client.bill
 
         result = bill_factory.get_bill("fake")
         expected_result = {'code':404, 'message':'Invalid ID'}

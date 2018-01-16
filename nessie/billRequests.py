@@ -71,8 +71,3 @@ class BillRequest():
 
 def error_handle(error_response):
     raise Exception(error_response.json())
-
-b = BillRequest('24bb950537c1164a2fbb1bf2a37c3267')
-bi = b.get_bill("5a261c3883a71c405074fcbd")
-# r = b.get_customer_bills("5a2614e483a71c405074fcba")
-# print(r)

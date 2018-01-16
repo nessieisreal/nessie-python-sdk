@@ -2,6 +2,8 @@ import os
 from nessie.customerRequests import CustomerRequests
 from nessie.accountRequests import AccountRequests
 
+from nessie.dataRequests import DataRequest
+
 from nessie.billRequests import BillRequest
 
 class Client():
@@ -14,4 +16,6 @@ class Client():
             
         self.account = AccountRequests(self.key)
         self.bill = BillRequest(self.key)
+        self.data = DataRequest(self.key)
+        
         
