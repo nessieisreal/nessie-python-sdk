@@ -1,6 +1,6 @@
 import requests
 from nessie.models.atm import ATM
-import nessie.utils import constants
+from nessie.utils import constants
 from nessie.utils.exceptions import ATMValidationError, NessieApiError
 
 class ATMRequest(object):
