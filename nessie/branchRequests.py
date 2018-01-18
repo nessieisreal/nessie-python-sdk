@@ -1,4 +1,5 @@
 import requests
+
 from nessie.models.branch import Branch
 from nessie.utils import constants
 from nessie.utils.exceptions import NessieApiError, BranchValidationError

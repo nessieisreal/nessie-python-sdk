@@ -11,7 +11,7 @@ class Branch(object):
 
     def to_dict(self):
         return_dict = {}
-        return_dict['_id'] = self.id
+        return_dict['_id'] = self._id
         return_dict['name'] = self.name
         return_dict['phone_number'] = self.phone_number
         return_dict['address'] = self.address
