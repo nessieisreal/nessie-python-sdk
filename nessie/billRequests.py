@@ -46,7 +46,7 @@ class BillRequest():
     def _create_bill_json(self, account_id, bill_json):
         url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
         response = requests.post(url,json=bill_json)
-        if (response.status_code != 200):
+        if (response.status_code != 201):
             raise NessieApiError(response)
         return Bill(response.json()['objectCreated'])
 

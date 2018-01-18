@@ -1,12 +1,13 @@
 import requests
-from models.branch import Branch
-import utils.constants
-from utils.exceptions import NessieApiError, BranchValidationError
+
+from nessie.models.branch import Branch
+from nessie.utils.exceptions import NessieApiError, BranchValidationError
+from nessie.utils import constants
 
 class BranchRequest(object):
 
     def __init__(self, api_key):
-        self.base_url = utils.constants.baseUrl
+        self.base_url = constants.baseUrl
         self.key = api_key
 
     def __build_params(self):

@@ -1,10 +1,10 @@
 import requests
-import utils.constants
 import json
 import re
+
 from models.customer import Customer
 from utils.exceptions import CustomerValidationError, NessieApiError, AddressValidationError
-
+from nessie.utils import constants
 
 class CustomerRequests:
 
