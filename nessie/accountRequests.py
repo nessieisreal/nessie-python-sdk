@@ -18,12 +18,16 @@ class AccountRequests:
         accounts = []
         for account in data:
             accounts.append(Account.fromJson(account))
+        if r.status_code != 200:
+            raise NessieApiError(r)
         return accounts
 
     def get_account(self, accountId):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.get(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload)
+        if r.status_code != 200:
+            raise NessieApiError(r)
         return Account.fromJson(r.json())
 
     def get_customer_accounts(self, customerId):
@@ -31,6 +35,8 @@ class AccountRequests:
         payload = {"key": self.key}
         r = requests.get(urlConstants.CUSTOMERS_ID_URL % customerId, headers=header, params=payload)
         data = r.json()
+        if r.status_code != 200:
+            raise NessieApiError(r)
         accounts = []
         for account in data:
             accounts.append(Account.fromJson(account))
@@ -67,6 +73,8 @@ class AccountRequests:
             body["account_number"] = account_number
         r = requests.put(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
+        # TODO: probably need to change nessier api error to
+        # NessierApiError(r)
         if data.get("code") != 202:
             raise NessieApiError(r.text)
 
