@@ -6,7 +6,7 @@ class AccountRequests:
     def __init__(self, apiKey):
         self.key = apiKey
 
-    def getAllAccounts(self, accountType=None):
+    def get_all_accounts(self, accountType=None):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         if accountType is not None:
@@ -20,13 +20,13 @@ class AccountRequests:
             accounts.append(Account.fromJson(account))
         return accounts
 
-    def getAccount(self, accountId):
+    def get_account(self, accountId):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.get(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload)
         return Account.fromJson(r.json())
 
-    def getCustomerAccounts(self, customerId):
+    def get_customer_accounts(self, customerId):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.get(urlConstants.CUSTOMERS_ID_URL % customerId, headers=header, params=payload)
@@ -36,7 +36,7 @@ class AccountRequests:
             accounts.append(Account.fromJson(account))
         return accounts
 
-    def createCustomerAccount(self, customerId, account_type, nickname, rewards, balance, account_number=None):
+    def create_customer_account(self, customerId, account_type, nickname, rewards, balance, account_number=None):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         if not Account.typeIsValid(account_type):
@@ -57,7 +57,7 @@ class AccountRequests:
             raise NessieApiError(r.text)
         return Account.fromJson(data.get("objectCreated"))
 
-    def updateAccount(self, accountId, nickname, account_number=None):
+    def update_account(self, accountId, nickname, account_number=None):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         body = {"nickname": nickname}
@@ -70,7 +70,7 @@ class AccountRequests:
         if data.get("code") != 202:
             raise NessieApiError(r.text)
 
-    def deleteAccount(self, accountId):
+    def delete_account(self, accountId):
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
         r = requests.delete(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload)
