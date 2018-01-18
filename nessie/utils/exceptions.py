@@ -1,5 +1,4 @@
-from nessie.utils import constants
-
+from nessie import utils
 
 class ATMValidationError(Exception):
     def __init__(self, code):
@@ -11,6 +10,15 @@ class ATMValidationError(Exception):
         else:
             message = 'Unrecognized Error'
         super(ATMValidationError, self).__init__(message)
+
+class BranchValidationError(Exception):
+    def __init__(self, id_code):
+        id_len = len(id_code)
+        if id_len != 24:
+            message = 'User provided the following branch ID with %d characters: %s. Branch IDs have 24 characters' % (id_len, id_code)
+        else:
+            message = 'User provided the following branch ID: %s. The provided ID is not a valid hexidecimal number' % (id_code)
+        super(BranchValidationError, self).__init__(message)
 
 
 class NessieApiError(Exception):

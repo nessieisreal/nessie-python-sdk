@@ -73,7 +73,7 @@ class AccountRequests:
             body["account_number"] = account_number
         r = requests.put(urlConstants.ACCOUNTS_ID_URL % accountId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
-        # TODO: probably need to change nessier api error to
+        # TODA: probably need to change nessier api error to
         # NessierApiError(r)
         if data.get("code") != 202:
             raise NessieApiError(r.text)
