@@ -1,8 +1,8 @@
 import requests
 
 from nessie.models.branch import Branch
-from nessie.utils.exceptions import NessieApiError, BranchValidationError
 from nessie.utils import constants
+from nessie.utils.exceptions import NessieApiError, BranchValidationError
 
 class BranchRequest(object):
 
@@ -24,7 +24,11 @@ class BranchRequest(object):
             raise BranchValidationError(id_string)
         try:
             int(id_string, 16)
+<<<<<<< HEAD
         except ValueError as e:
+=======
+        except ValueError:
+>>>>>>> data
             raise BranchValidationError(id_string)
 
     def get_branches(self):

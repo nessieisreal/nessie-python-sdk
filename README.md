@@ -1,4 +1,7 @@
 # Nessie Python SDK
+
+[![Build Status](https://travis-ci.org/nessieisreal/nessie-python-sdk.svg?branch=master)](https://travis-ci.org/nessieisreal/nessie-python-sdk)
+
 Provides Wrapper Functions for Nessie API
 
 ## Usage
