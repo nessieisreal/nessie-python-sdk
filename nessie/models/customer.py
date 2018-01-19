@@ -1,4 +1,4 @@
-from models.address import Address
+from nessie.models.address import Address
 
 
 class Customer:

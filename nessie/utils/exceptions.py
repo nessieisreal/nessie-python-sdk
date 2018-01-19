@@ -1,5 +1,4 @@
-import utils.constants
-
+from nessie import utils
 
 class ATMValidationError(Exception):
     def __init__(self, code):
