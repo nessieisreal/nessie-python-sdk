@@ -2,14 +2,17 @@ class Account:
 
     TYPES = {"Checking", "Credit Card", "Savings"}
 
-    def __init__(self, _id, type, nickname, rewards, balance, customer_id, account_number=None):
+    def __init__(self, _id, account_type, nickname, rewards, balance, customer_id, account_number=None):
         self._id = _id
-        self.type = type
+        self.account_type = account_type
         self.nickname = nickname
         self.rewards = rewards
         self.balance = balance
         self.account_number = account_number
         self.customer_id = customer_id
+        
+    def to_dict(self):
+        return vars(self)
 
     @staticmethod
     def typeIsValid(accountType):
