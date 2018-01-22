@@ -1,5 +1,5 @@
-import json
 import requests
+
 from nessie.utils.constants import baseUrl
 
 class DataRequest():
