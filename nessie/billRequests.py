@@ -32,7 +32,7 @@ class BillRequest():
         result = response.json()
         # for each bill in json format convert it to a Bill object
         # using map operator and convert iterator to list
-        return list(map(lambda json_bill:Bill(json_bill), result))
+        return list(map(Bill, result))
 
     def get_account_bills(self, account_id):
         url = f'{self.base_url}/accounts/{account_id}/bills?key={self.key}'
@@ -40,7 +40,7 @@ class BillRequest():
         if (response.status_code != 200):
             raise NessieApiError(response)
         result = response.json()
-        return list(map(lambda json_bill:Bill(json_bill), result))
+        return list(map(Bill, result))
     
     # allows users to create bills by passing in json
     def _create_bill_json(self, account_id, bill_json):

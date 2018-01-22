@@ -35,18 +35,10 @@ class ATMRequest(object):
         paramsInvalid = not paramsMissing and (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0)
         
         if (paramsExist and paramsMissing):
-<<<<<<< HEAD
-            raise ATMValidationError(nessie.utils.constants.missingFields)
-        if (paramsInvalid):
-            raise ATMValidationError(nessie.utils.constants.invalidFields)
-
-
-=======
             raise ATMValidationError(constants.atmMissingFields)
         if (paramsInvalid):
             raise ATMValidationError(constants.atmInvalidFields)
             
->>>>>>> data
     def getAtms(self, lat=None, lng=None, rad=None):
         reqUrl = "%s/atms" % self.baseUrl
         par = self.__buildParams(lat, lng, rad)

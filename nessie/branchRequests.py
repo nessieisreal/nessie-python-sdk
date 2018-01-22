@@ -24,11 +24,7 @@ class BranchRequest(object):
             raise BranchValidationError(id_string)
         try:
             int(id_string, 16)
-<<<<<<< HEAD
-        except ValueError as e:
-=======
         except ValueError:
->>>>>>> data
             raise BranchValidationError(id_string)
 
     def get_branches(self):
