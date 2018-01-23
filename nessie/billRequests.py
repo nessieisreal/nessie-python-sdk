@@ -1,7 +1,7 @@
 import requests
 
-from nessie.models.bill import Bill
-from nessie.utils.exceptions import NessieApiError
+from .models.bill import Bill
+from .utils.exceptions import NessieApiError
 
 class BillRequest():
 

@@ -35,7 +35,7 @@ class TestBillRequests(unittest.TestCase):
 
     def tearDown(self):
         data_deletor = DataRequest(wkey)
-        response = data_deletor.delete_data('Bills')
+        # response = data_deletor.delete_data('Bills')
 
     # def test_get_bill_succeed(self):
     #     print("test_get_bill_succeed")
