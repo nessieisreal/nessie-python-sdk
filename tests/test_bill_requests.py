@@ -5,7 +5,7 @@ sys.path.insert(0,path+'/../')
 
 from nessie.accountRequests import AccountRequests
 from nessie import billRequests
-from nessie.dataRequests import DataRequest
+from nessie.dataRequests import DataRequests
 from nessie.utils.exceptions import NessieApiError
 
 # def test_create_bill(self):
@@ -34,7 +34,7 @@ class TestBillRequests(unittest.TestCase):
         )
 
     def tearDown(self):
-        data_deletor = DataRequest(wkey)
+        data_deletor = DataRequests(wkey)
         # response = data_deletor.delete_data('Bills')
 
     # def test_get_bill_succeed(self):
