@@ -12,8 +12,7 @@ class DataRequest():
     # Loans, Purchases, Transfers, Withdrawals
 
     def delete_data(self, dataType:str):
-        url=f'{baseUrl}/data?type={dataType}&?key={self.key}'
-        print(url)
+        url=f'{baseUrl}/data?type={dataType}&key={self.key}'
         response = requests.delete(url)
         # status_code 200 denotes success
         # status_code 404 denotes success, but no data to delete
