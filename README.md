@@ -1,8 +1,35 @@
 # Nessie Python SDK
+
+[![Build Status](https://travis-ci.org/nessieisreal/nessie-python-sdk.svg?branch=master)](https://travis-ci.org/nessieisreal/nessie-python-sdk)
+
 Provides Wrapper Functions for Nessie API
 
 ## Usage
 TODO
+
+
+
+## Overview
+
+
+    Geolocation 
+    
+    Atm / Branch 
+
+    (multiple accounts per customer)
+    Customer    |---  Accounts
+    
+    Account     |------ Bill
+                    |
+                    --- Deposit
+                    |
+                    --- Loan
+                    |
+                    --- Purchase    --- Merchant
+                    |
+                    --- Transfer
+                    |
+                    --- Withdrawal
 
 
 ## Development Setup
