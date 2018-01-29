@@ -1,9 +1,9 @@
-from nessie import utils
+import utils
 
 class ATMValidationError(Exception):
     def __init__(self, code):
         if code == utils.constants.atmMissingFields:
-            message = 'Request is missing one or more of the following fields: lat, lng, rad.'
+            message = 'Request is missing one or more of the following fields: lat, lng, rad. Request must have all or none of these fields.'
         elif code == utils.constants.atmInvalidFields:
             message = \
                 'Request contains invalid fields. Lat must be between -90 and 90. Lng must be between -180 and 180.'
@@ -19,6 +19,16 @@ class BranchValidationError(Exception):
         else:
             message = 'User provided the following branch ID: %s. The provided ID is not a valid hexidecimal number' % (id_code)
         super(BranchValidationError, self).__init__(message)
+
+class MerchantValidationError(Exception):
+    def __init__(self, code):
+        if code == utils.constants.merchantMissingFields:
+            message = 'Request is missing one or more of the following fields: lat, lng, rad. Request must have all or none of these fields.'
+        elif code == utils.constants.merchantInvalidFields:
+            message = 'Request contains invalid fields. Lat must be between -90 and 90. Lng must be between -180 and 180.'
+        else:
+            message = 'Unrecognized Error'
+        super(MerchantValidationError, self).__init__(message)
 
 
 class NessieApiError(Exception):
