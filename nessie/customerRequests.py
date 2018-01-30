@@ -80,17 +80,21 @@ class CustomerRequests:
         return created_customer
 
     # Updates a customer's address based on CustomerId
+    # weird can only change address not first/last name
     def update_customer(self, customer_id, new_address):
         if customer_id is None:
             raise CustomerValidationError(utils.constants.customerIdMissingField)
-
+        
+        # needs check because otherwise
+        # if you set new city (or any one field of address)
+        # but not the rest it sets the other address fields to none
         val_address = validate_address(new_address)
         if val_address != utils.constants.success:
             raise AddressValidationError(val_address)
 
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
-        body = {"address": new_address}
+        body = {'address':new_address}
         url = utils.constants.customersIdUrl % customer_id
         r = requests.put(url, headers=header, params=payload, data=json.dumps(body))
         if r.status_code != 202:
