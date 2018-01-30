@@ -1,10 +1,9 @@
 import os
-from nessie.customerRequests import CustomerRequests
-from nessie.accountRequests import AccountRequests
-
-from nessie.dataRequests import DataRequests
-
-from nessie.billRequests import BillRequest
+# ordered from highest to lowest scope
+from .dataRequests import DataRequests
+from .customerRequests import CustomerRequests
+from .accountRequests import AccountRequests
+from .billRequests import BillRequest
 
 class Client():
     def __init__(self, nessie_api_key=None):
@@ -20,5 +19,6 @@ class Client():
         self.account = AccountRequests(self.key)
         self.bill = BillRequest(self.key)
         self.data = DataRequests(self.key)
+        self.customer = CustomerRequests(self.key)
         
         

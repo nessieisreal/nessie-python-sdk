@@ -21,7 +21,7 @@ from nessie.utils.exceptions import NessieApiError
 # premade account id
 account_id = '5a5471796514d52c7774a2cb'
 
-class TestBillRequests(unittest.TestCase):
+class TestBillRequests():
     # create some dummy bills
     def setUp(self):
         # implicitly get NESSIE_API_KEY from env
@@ -38,8 +38,12 @@ class TestBillRequests(unittest.TestCase):
         )
 
     def tearDown(self):
-        data_deletor = self.client.data
-        response = data_deletor.delete_data('Bills')
+        # data_deletor = self.client.data
+        # response = data_deletor.delete_data('Bills')
+        d = DataRequests('7e9b72fdb7b286fcd0aae87deb0e09a2')
+        d.delete_data('Bills')
+        
+        
 
     # def test_get_bill_succeed(self):
     #     print("test_get_bill_succeed")
@@ -53,7 +57,7 @@ class TestBillRequests(unittest.TestCase):
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
         print("test_get_nonreal_bill_fail")
-        bill_factory = billRequests.BillRequest(wkey)
+        bill_factory = self.client.bill
         
         
         expected_status_code = 404
@@ -67,5 +71,6 @@ class TestBillRequests(unittest.TestCase):
         self.assertEqual(result.code,expected_status_code)
 
 
-
+# d = DataRequests('7e9b72fdb7b286fcd0aae87deb0e09a2')
+# d.delete_data('Bills')
         

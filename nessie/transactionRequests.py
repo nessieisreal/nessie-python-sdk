@@ -23,10 +23,11 @@ from nessie import utils
 """
 
 class transactionRequest():
-    def __init__(self, api_key, transaction_name:str):
+    def __init__(self, api_key, transaction_name:str, transaction_class):
         self.key = api_key
         self.base_url = utils.constants.baseUrl
         self.transaction = transaction_name
+        self.transaction_class = transaction_class
 
     # creates <transaction> under the provided account
     def _create_transaction(self, account_id):
@@ -40,7 +41,8 @@ class transactionRequest():
         url = f'{self.base_url}/accounts/{account_id}/{self.transaction}?key={self.key}'
         response = requests.get(url)
         result = response.json()
-
+        
+        return result
         # need to do work here to convert json into objects
 
     def _get_transaction(self, transaction_id):
