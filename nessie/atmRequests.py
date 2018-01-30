@@ -39,7 +39,7 @@ class ATMRequest(object):
         if (paramsInvalid):
             raise ATMValidationError(constants.atmInvalidFields)
             
-    def getAtms(self, lat=None, lng=None, rad=None):
+    def get_atms(self, lat=None, lng=None, rad=None):
         reqUrl = "%s/atms" % self.baseUrl
         par = self.__buildParams(lat, lng, rad)
         self.__validateParams(par)

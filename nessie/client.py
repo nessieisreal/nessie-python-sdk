@@ -1,9 +1,11 @@
 import os
-# ordered from highest to lowest scope
-from .dataRequests import DataRequests
-from .customerRequests import CustomerRequests
+
 from .accountRequests import AccountRequests
+from .atmRequests import ATMRequest
 from .billRequests import BillRequest
+from .branchRequests import BranchRequest
+from .customerRequests import CustomerRequests
+from .dataRequests import DataRequests
 
 class Client():
     def __init__(self, nessie_api_key=None):
@@ -15,9 +17,11 @@ class Client():
                 raise Exception(e,"probably need to `export NESSIE_API_KEY=xxxxxxxxxxx`")
         else:
             self.key = nessie_api_key
-            
+        
         self.account = AccountRequests(self.key)
+        self.atm = ATMRequest(self.key)
         self.bill = BillRequest(self.key)
+        self.branch = BranchRequest(self.key)
         self.data = DataRequests(self.key)
         self.customer = CustomerRequests(self.key)
         

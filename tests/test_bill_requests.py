@@ -14,12 +14,6 @@ from nessie.utils.exceptions import NessieApiError
 #     bill_factory = billRequests.BillRequest("wkey")
 
 
-# customer_id = '5a546ffd6514d52c7774a2ca'
-# account_factory = AccountRequests(wkey)
-# account_factory.createCustomerAccount(customer_id)
-
-# premade account id
-account_id = '5a5471796514d52c7774a2cb'
 
 class TestBillRequests():
     # create some dummy bills
@@ -68,8 +62,5 @@ class TestBillRequests():
             result = e
             
         self.assertEqual(result.code,expected_status_code)
-
-
-# d = DataRequests('7e9b72fdb7b286fcd0aae87deb0e09a2')
-# d.delete_data('Bills')
+        
         
