@@ -1,8 +1,8 @@
 import requests
 
-from nessie.models.branch import Branch
-from nessie.utils import constants
-from nessie.utils.exceptions import NessieApiError, BranchValidationError
+from .models.branch import Branch
+from .utils import constants
+from .utils.exceptions import NessieApiError, BranchValidationError
 
 class BranchRequest(object):
 
