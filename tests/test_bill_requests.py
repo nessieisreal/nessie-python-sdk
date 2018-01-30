@@ -59,7 +59,6 @@ class TestBillRequests():
         print("test_get_nonreal_bill_fail")
         bill_factory = self.client.bill
         
-        
         expected_status_code = 404
         # expected_message = 'Invalid ID'
         result = {}
