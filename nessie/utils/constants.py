@@ -13,3 +13,8 @@ createCustomerMissingFields = 3
 customerIdMissingField = 4
 addressValidationZipCode = 5
 addressMissingField = 6
+
+# Loan types
+
+LOAN_TYPES = ['home', 'auto', 'small business']
+LOAN_STATUS = ['pending', 'approved', 'declined']
