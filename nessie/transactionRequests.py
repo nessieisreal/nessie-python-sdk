@@ -1,6 +1,7 @@
 # base class transaction
 # should not be directly used
 import requests
+from abc import ABC
 from nessie import utils
 
 """
@@ -22,7 +23,7 @@ from nessie import utils
         DELETE  delete selected transaction
 """
 
-class transactionRequest():
+class TransactionRequest(ABC):
     def __init__(self, api_key, transaction_name:str, transaction_class):
         self.key = api_key
         self.base_url = utils.constants.baseUrl

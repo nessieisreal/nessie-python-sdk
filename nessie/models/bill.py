@@ -1,8 +1,6 @@
 class Bill():
 
     def __init__(self, _json):
-        print(_json)
-        
         self.bill_id = _json['_id']
         self.status = _json["status"]
         self.payee = _json["payee"]

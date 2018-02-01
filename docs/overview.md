@@ -16,6 +16,7 @@ Customer 1 -- * Accounts
 
 ## Transactions
 
+#### Bill
 #### Desposit
 #### Loan
 #### Purchase
