@@ -18,8 +18,6 @@ class TestAtmRequests(unittest.TestCase):
         
         observed_atms = self.client.atm.get_atms(lat,lng,rad)
         print(observed_atms)
-        self.assertEqual(1,0)
-        
         expected_firsttwo_atms = [
         {
           "_id": "56c66be5a73e492741506f4b",
@@ -72,3 +70,5 @@ class TestAtmRequests(unittest.TestCase):
           ],
           "amount_left": 444425
         }]
+        
+        self.assertEqual(observed_atms,expected_atms)
