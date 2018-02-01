@@ -10,7 +10,7 @@ class ATM(object):
         self.hours = jsonData.get('hours')
         self.geocode = jsonData.get('geocode')
 
-    def toDict(self):
+    def to_dict(self):
         returnDict = {}
         returnDict['_id'] = self.atmId
         returnDict['name'] = self.name

@@ -50,6 +50,7 @@ class ATMRequest(object):
 
         jsonAtms = r.json()
         while ('next' in r.json()['paging']):
+            print(r.json())
             reqUrl = "%s%s" % (self.baseUrl, r.json()['paging']['next'])
             r = requests.get(reqUrl)
 
@@ -60,7 +61,7 @@ class ATMRequest(object):
 
         return self.__formatResponse(jsonAtms)
 
-    def getAtmById(self, idCode):
+    def get_atm(self, idCode):
         reqUrl = "%s/atms/%s" % (self.baseUrl, idCode)
         par = {'key': self.key}
 
