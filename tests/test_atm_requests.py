@@ -10,6 +10,11 @@ class TestAtmRequests(unittest.TestCase):
     def setUp(self):
         # implicitly get NESSIE_API_KEY from env
         self.client = Client()
+       
+    # no tearDown needed as its 
+    # read only functions
+    # def tearDown(self):
+    #     pass
         
         
     # test_get_atms go intos an infinite loop
