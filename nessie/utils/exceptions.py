@@ -1,10 +1,10 @@
-from nessie import utils
+from . import constants
 
 class ATMValidationError(Exception):
     def __init__(self, code):
-        if code == utils.constants.atmMissingFields:
+        if code == constants.atmMissingFields:
             message = 'Request is missing one or more of the following fields: lat, lng, rad.'
-        elif code == utils.constants.atmInvalidFields:
+        elif code == constants.atmInvalidFields:
             message = \
                 'Request contains invalid fields. Lat must be between -90 and 90. Lng must be between -180 and 180.'
         else:
@@ -29,9 +29,9 @@ class NessieApiError(Exception):
 
 class CustomerValidationError(Exception):
     def __init__(self, code):
-        if code == utils.constants.createCustomerMissingFields:
+        if code == constants.createCustomerMissingFields:
             message = 'Request is missing one or more of the following fields: first_name, last_name.'
-        elif code == utils.constants.customerIdMissingField:
+        elif code == constants.customerIdMissingField:
             message = 'Request is missing the identification number field.'
         else:
             message = 'Unrecognized Error'
@@ -40,9 +40,9 @@ class CustomerValidationError(Exception):
 
 class AddressValidationError(Exception):
     def __init__(self, code):
-        if code == utils.constants.addressMissingField:
+        if code == constants.addressMissingField:
             message = 'Request is missing the address field.'
-        elif code == utils.constants.addressValidationZipCode:
+        elif code == constants.addressValidationZipCode:
             message = 'Address has an invalid zip code. The zip code must be a number with 5 digits.'
         else:
             message = 'Unrecognized Error'

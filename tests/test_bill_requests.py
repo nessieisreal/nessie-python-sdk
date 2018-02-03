@@ -5,8 +5,8 @@ sys.path.insert(0,path+'/../')
 
 from nessie.accountRequests import AccountRequests
 from nessie import billRequests
-from nessie.dataRequests import DataRequest
-
+from nessie.dataRequests import DataRequests
+from nessie.utils.exceptions import NessieApiError
 
 # def test_create_bill(self):
 #     bill_factory = billRequests.BillRequest("wkey")
@@ -34,25 +34,25 @@ class TestBillRequests(unittest.TestCase):
         )
 
     def tearDown(self):
-        data_deletor = DataRequest(wkey)
-        response = data_deletor.delete_data('Bills')
+        data_deletor = DataRequests(wkey)
 
-    def test_get_bill_succeed(self):
-        bill_factory = billRequests.BillRequest(wkey)
-        result = bill_factory.get_account_bills(account_id)
-        print(result)
-        # result = bill_factory.get_bill("5a261c3883a71c405074fcbd")
-        # expected_result = {'bill_id': '5a261c3883a71c405074fcbd', 'status': 'pending', 'payee': 'string', 'nickname': 'string', 'payment_date': '2017-12-05', 'recurring_date': 1, 'payment_amount': 23, 'creation_date': '2017-12-05', 'account_id': '5a261a0483a71c405074fcbc'}
-        self.assertEqual(result[0]['payment_date'], '2018-01-10')
 
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
+        print("test_get_nonreal_bill_fail")
         bill_factory = billRequests.BillRequest(wkey)
-
-        result = bill_factory.get_bill("fake")
-        expected_result = {'code':404, 'message':'Invalid ID'}
-        # {'code':401, 'message':'unauthorized'}
-        self.assertEqual(result, expected_result)
+        
+        
+        expected_status_code = 404
+        # expected_message = 'Invalid ID'
+        result = {}
+        try:
+            try_result = bill_factory.get_bill("fake")
+        except NessieApiError as e:
+            result = e
+            
+        self.assertEqual(result.code,expected_status_code)
+        
 
 
 

@@ -44,3 +44,4 @@ class TestAccountRequests(unittest.TestCase):
         accounts = accReq.getAllAccounts()
         for account in accounts:
             print(account.__dict__)
+            
