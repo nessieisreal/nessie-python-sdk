@@ -9,7 +9,7 @@ from nessie.models.address import Address
 from nessie.utils.exceptions import NessieApiError
 
 class TestDepositRequests(unittest.TestCase):
-    # create some dummy bills
+
     def setUp(self):
         # implicitly get NESSIE_API_KEY from env
         self.client = Client()
@@ -19,10 +19,6 @@ class TestDepositRequests(unittest.TestCase):
         self.account_id = account_factory.create_customer_account(self.customer_id, "Savings", "Test Account", 0, 100)._id
         self.deposit_factory = self.client.deposit
         self.deposit_id = self.deposit_factory.create_deposit(self.account_id, 'balance', 88).to_dict()['id']
-
-
-    def tearDown(self):
-        None
 
     def test_create_deposit_all_fields(self):
         print("test_create_deposit_all_fields")
