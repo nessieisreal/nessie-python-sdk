@@ -57,7 +57,6 @@ class DepositRequest():
     def _update_deposit_json(self, deposit_id, depositUpdate):
         url = f'{self.base_url}/deposits/{deposit_id}?key={self.key}'
         response = requests.put(url, json=depositUpdate)
-        print(response)
         if (response.status_code != 202):
             raise NessieApiError(response)
         return response.json()

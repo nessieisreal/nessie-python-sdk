@@ -3,11 +3,10 @@ import sys, os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,path+'/../')
 
-from nessie.accountRequests import AccountRequests
-from nessie.billRequests import BillRequest
 from nessie.dataRequests import DataRequest
 from nessie.client import Client
 from nessie.models.address import Address
+from nessie.utils.exceptions import NessieApiError
 
 class TestDepositRequests(unittest.TestCase):
     # create some dummy bills
@@ -19,6 +18,7 @@ class TestDepositRequests(unittest.TestCase):
         account_factory = self.client.account
         self.account_id = account_factory.create_customer_account(self.customer_id, "Savings", "Test Account", 0, 100)._id
         self.deposit_factory = self.client.deposit
+        self.deposit_id = self.deposit_factory.create_deposit(self.account_id, 'balance', 88).to_dict()['id']
 
 
     def tearDown(self):
@@ -30,7 +30,6 @@ class TestDepositRequests(unittest.TestCase):
         self.assertEqual(result['transaction_date'], '2018-02-01')
         self.assertEqual(result['payee_id'], self.account_id)
         self.assertEqual(result['amount'], 73)
-        self.deposit_id = result['id']
 
     def test_create_deposit_min_fields(self):
         print("test_create_deposit_min_fields")
@@ -48,52 +47,42 @@ class TestDepositRequests(unittest.TestCase):
 
     def test_create_deposit_bad_account(self):
         print("test_create_deposit_bad_account")
-        result = self.deposit_factory.create_deposit("59fb2c49b390353c9512sv45", 'balance', 6)
+        self.assertRaises(NessieApiError, self.deposit_factory.create_deposit, "59fb2c49b390353c9512", 'balance', 6)
 
     def test_get_deposit(self):
         print("test_get_deposit")
         result = self.deposit_factory.get_deposit(self.deposit_id).to_dict()
+        self.assertEqual(result['amount'], 88)
 
     def test_get_deposit_fail(self):
         print("test_get_deposit_fail")
-        result = self.deposit_factory.get_deposit(self.deposit_id).to_dict()
+        self.assertRaises(NessieApiError, self.deposit_factory.get_deposit, "")
 
     def test_get_account_deposits(self):
         print("test_get_account_deposits")
-        result = self.deposit_factory.get_account_deposits(self.account_id).to_dict()
+        result = self.deposit_factory.get_account_deposits(self.account_id)
 
     def test_get_account_deposits_fail(self):
         print("test_get_account_deposits_fail")
-        result = self.deposit_factory.get_account_deposits("59fb2c49b390353c9512sv45").to_dict()
+        self.assertRaises(NessieApiError, self.deposit_factory.get_account_deposits, "")
 
     def test_update_deposit_all_fields(self):
         print("test_update_deposit_all_fields")
-        result = self.deposit_factory.update_deposit(self.deposit_id, 'balance', 6, "test Updated").to_dict()
-        self.assertEqual(result['amount'], 6)
-        self.assertEqual(result['description'], "test Updated")
+        result = self.deposit_factory.update_deposit(self.deposit_id, 'balance', 6, "test Updated")
+        self.assertEqual(result['code'], 202)
 
     def test_update_deposit_fail(self):
         print("test_update_deposit_fail")
-        result = self.deposit_factory.update_deposit("", 'balance', 77).to_dict()
+        self.assertRaises(NessieApiError, self.deposit_factory.update_deposit, "", 'balance', 77)
 
     def test_delete_deposit(self):
         print("test_delete_deposit")
-        result = self.deposit_factory.delete_deposit(self.deposit_id)
+        self.deposit_factory.delete_deposit(self.deposit_id)
 
     def test_delete_deposit_fail(self):
         print("test_delete_deposit_fail")
-        result = self.deposit_factory.delete_deposit("")
+        self.assertRaises(NessieApiError, self.deposit_factory.delete_deposit, "")
 
-
-    # try fetching a bill that doesn't exist
-    def test_get_nonreal_bill_fail(self):
-        print("test_get_nonreal_bill_fail")
-        bill_factory = self.client.bill
-
-        result = bill_factory.get_bill("fake")
-        expected_result = {'code':404, 'message':'Invalid ID'}
-        # {'code':401, 'message':'unauthorized'}
-        self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':
     unittest.main()
