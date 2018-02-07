@@ -1,6 +1,7 @@
 import requests
 
-from nessie.models.deposit import Deposit
+from .models.deposit import Deposit
+from .utils.exceptions import NessieApiError
 
 class DepositRequest():
 
@@ -37,38 +38,43 @@ class DepositRequest():
         return Deposit(response.json()['objectCreated'])
 
     #Need optional fields
-    def create_deposit(self, account_id:str , medium:str, transaction_date:str,
-        status:str, amount:float, description:str):
-        deposit = self._create_deposit_json(account_id,{
+    def create_deposit(self, account_id:str , medium:str, amount:float, transaction_date:str=None,
+        status:str=None, description:str=None):
+        request = {
             "medium":medium,
-            "transaction_date":transaction_date,
-            "status":status,
-            "amount":amount,
-            "description":description
-        })
+            "amount":amount
+        }
+        if transaction_date is not None:
+            request["transaction_date"] = transaction_date
+        if status is not None:
+            request["status"] = status
+        if description is not None:
+            request["description"] = description
+        deposit = self._create_deposit_json(account_id, request)
         return deposit
 
 
     def _update_deposit_json(self, deposit_id, depositUpdate):
-        url = f'{self.base_url}/deposits/{deposit_id}/deposits?key={self.key}'
+        url = f'{self.base_url}/deposits/{deposit_id}?key={self.key}'
         response = requests.put(url, json=depositUpdate)
         print(response)
+        if (response.status_code != 202):
+            raise NessieApiError(response)
         return response.json()
 
     def update_deposit(self, deposit_id:str, medium:str, amount:float,
-        description:str):
-        depositUpdate = self._update_deposit_json(deposit_id,{
+        description:str=None):
+        request = {
             "medium":medium,
-            "amount":amount,
-            "description":description
-        })
+            "amount":amount
+        }
+        if description is not None:
+            request["description"] = description
+        depositUpdate = self._update_deposit_json(deposit_id, request)
         return depositUpdate
 
     def delete_deposit(self, deposit_id):
-        url = f'{self.base_url}/deposits/{deposit_id}/deposits?key={self.key}'
+        url = f'{self.base_url}/deposits/{deposit_id}?key={self.key}'
         response = requests.delete(url)
-        return response.json()
-
-
-def error_handle(error_response):
-    raise Exception(error_response.json())
+        if (response.status_code != 204):
+            raise NessieApiError(response)
