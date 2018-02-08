@@ -14,21 +14,19 @@ class DepositRequest():
     def get_deposit(self, deposit_id):
         url = f'{self.base_url}/deposits/{deposit_id}?key={self.key}'
         response = requests.get(url)
-        # if (response.status_code != 200):
-        #    error_handle(response)
+        if (response.status_code != 200):
+            raise NessieApiError(response)
         result = response.json()
-        try:
-            result['deposit_id']=result['_id']
-            del result['_id']
-        except KeyError:
-            pass
-        return result
+        return Deposit(result)
 
     # Returns the deposits that the account is involved in.
     def get_account_deposits(self, account_id):
         url = f'{self.base_url}/accounts/{account_id}/deposits?key={self.key}'
         response = requests.get(url)
-        return response.json()
+        if (response.status_code != 200):
+            raise NessieApiError(response)
+        result = response.json()
+        return list(map(Deposit, result))
 
     # Creates a deposit where the account with the ID specified receives the amount.
     def create_deposit(self, account_id:str , medium:str, amount:float, transaction_date:str=None, status:str=None, description:str=None):
