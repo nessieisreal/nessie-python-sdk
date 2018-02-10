@@ -1,6 +1,6 @@
 import requests, json, urlConstants
-from nessie.models.account import Account
-from nessie.utils.exceptions import NessieApiError
+from .models.account import Account
+from .utils.exceptions import NessieApiError
 
 class AccountRequests:
     def __init__(self, apiKey):

@@ -2,7 +2,8 @@ class Bill():
 
     def __init__(self, _json):
         print(_json)
-        self.id = _json["_id"]
+        
+        self.bill_id = _json['_id']
         self.status = _json["status"]
         self.payee = _json["payee"]
         self.nickname = _json["nickname"]
@@ -14,16 +15,16 @@ class Bill():
     def to_dict(self):
         return vars(self)
 
-"""
-{
-  "_id": "string",
-  "status": "pending",
-  "payee": "string",
-  "nickname": "string",
-  "creation_date": "2017-12-11",
-  "payment_date": "2017-12-11",
-  "recurring_date": 0,
-  "upcoming_payment_date": "2017-12-11",
-  "account_id": "string"
-}
-"""
+# """
+# {
+#   "_id": "string",
+#   "status": "pending",
+#   "payee": "string",
+#   "nickname": "string",
+#   "creation_date": "2017-12-11",
+#   "payment_date": "2017-12-11",
+#   "recurring_date": 0,
+#   "upcoming_payment_date": "2017-12-11",
+#   "account_id": "string"
+# }
+# """

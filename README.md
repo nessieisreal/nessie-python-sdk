@@ -8,6 +8,30 @@ Provides Wrapper Functions for Nessie API
 TODO
 
 
+
+## Overview
+
+
+    Geolocation 
+    
+    Atm / Branch 
+
+    (multiple accounts per customer)
+    Customer    |---  Accounts
+    
+    Account     |------ Bill
+                    |
+                    --- Deposit
+                    |
+                    --- Loan
+                    |
+                    --- Purchase    --- Merchant
+                    |
+                    --- Transfer
+                    |
+                    --- Withdrawal
+
+
 ## Development Setup
 
 Install python 3.6.2 or greater
