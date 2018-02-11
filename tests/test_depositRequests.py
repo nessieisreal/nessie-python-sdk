@@ -3,7 +3,7 @@ import sys, os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,path+'/../')
 
-from nessie.dataRequests import DataRequest
+from nessie.dataRequest import DataRequest
 from nessie.client import Client
 from nessie.models.address import Address
 from nessie.utils.exceptions import NessieApiError

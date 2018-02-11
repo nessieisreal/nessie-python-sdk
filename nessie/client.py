@@ -2,7 +2,7 @@ import os
 from nessie.customerRequests import CustomerRequests
 from nessie.accountRequests import AccountRequests
 
-from nessie.dataRequests import DataRequest
+from .dataRequest import DataRequest
 
 from nessie.billRequests import BillRequest
 from nessie.depositRequests import DepositRequest
