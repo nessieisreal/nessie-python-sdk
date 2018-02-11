@@ -2,7 +2,7 @@ import requests, json, urlConstants
 from .models.account import Account
 from .utils.exceptions import NessieApiError
 
-class AccountRequests:
+class AccountRequest:
     def __init__(self, apiKey):
         self.key = apiKey
 

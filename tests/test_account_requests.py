@@ -3,7 +3,7 @@ import sys, os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,path+'/../')
 
-from nessie.accountRequests import AccountRequests
+from nessie.accountRequest import AccountRequest
 from nessie.models.account import Account
 
 class TestAccountRequests(unittest.TestCase):
