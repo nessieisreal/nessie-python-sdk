@@ -2,7 +2,9 @@ import requests
 
 from .models.branch import Branch
 from .utils import constants
-from .utils.exceptions import NessieApiError, BranchValidationError
+from .utils.exceptions import NessieApiError, IdValidationError
+from .utils.validation import Validation
+from utils.validation import validate_path
 
 class BranchRequest(object):
 
@@ -19,14 +21,6 @@ class BranchRequest(object):
             resp_list.append(Branch(branch_dict))
         return resp_list
 
-    def __validate_path(self, id_string):
-        if len(id_string) != 24:
-            raise BranchValidationError(id_string)
-        try:
-            int(id_string, 16)
-        except ValueError:
-            raise BranchValidationError(id_string)
-
     def get_branches(self):
         req_url = '%s/branches' % self.base_url
         par = self.__build_params()
@@ -40,7 +34,7 @@ class BranchRequest(object):
         return self.__format_response(branch_list)
 
     def get_branch_by_id(self, id_string):
-        self.__validate_path(id_string)
+        validate_path(id_string)
         req_url = '%s/branches/%s' % (self.base_url, id_string)
         par = self.__build_params()
 

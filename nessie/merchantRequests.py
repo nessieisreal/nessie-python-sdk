@@ -3,8 +3,10 @@ import json
 import re
 
 from models.merchant import Merchant
-from utils.exceptions import NessieApiError, AddressValidationError, MerchantValidationError
+from models.address import Address
+from utils.exceptions import NessieApiError, AddressValidationError, MerchantValidationError, GeocodeValidationError
 from utils import constants 
+from utils.validation import validate_path, validate_address, validate_geocode
 
 class MerchantRequest:
 
@@ -31,7 +33,7 @@ class MerchantRequest:
         paramsInvalid = not paramsMissing and (lat < -90 or lat > 90 or lng < -180 or lng > 180 or rad <= 0)
         
         if (paramsExist and paramsMissing):
-            raise MerchantValidationError(constants.merchantMissingFields)
+            raise MerchantValidationError(constants.merchantMissingGetterFields)
         if (paramsInvalid):
             raise MerchantValidationError(constants.merchantInvalidFields)
 
@@ -54,11 +56,50 @@ class MerchantRequest:
 
         merchant_list = r.json()
 
-        # for merch in merchant_list:
-        #     print(merch)
-
         return self.__format_response(merchant_list)
 
+    def get_merchant_by_id(self, id):
+        validate_path(id)
+        header = {'Content-Type': 'application/json'}
+        par = {'key': self.key}
+        url = constants.merchantsUrl + "/" + id
+
+        r = requests.get(url, headers=header, params=par)
+        if r.status_code != constants.httpOk:
+            raise NessieApiError(r)
+
+        return Merchant(r.json())
+
+    def create_merchant(self, name: str, category: str, address: Address, geocode):
+        if (name is None or category is None or address is None):
+            raise MerchantValidationError(constants.merchantMissingCreateFields)
+        geocode_validate_code = validate_geocode(geocode)
+        if geocode_validate_code != constants.success:
+            raise GeocodeValidationError(geocode_validate_code)
+            
+        
+        addr_validate_code = validate_address(address)
+        if (addr_validate_code != constants.success or addr_validate_code != constants.addressInvalidState):
+            raise AddressValidationError(addr_validate_code)
+        elif (addr_validate_code == constants.addressInvalidState):
+            print("[MerchantRequest] WARNING: State field is of a valid two-char format but does not contain a valid state abbreviation.")
+
+        header = {"Content-Type": "application/json"}
+        par = {"key": self.key}
+        body = {
+            "name": name,
+            "category": category,
+            "address": address.to_dict(),
+            "geocode": geocode
+        }
+
+        r = requests.post(utils.constants.customersUrl, headers=header, params=payload, data=json.dumps(body))
+        if r.status_code != 201:
+            raise NessieApiError(r)
+
+        json_data = r.json
+        return Merchant(json_data.get("objectCreated"))
+        
 
 def main():
     print('Import this class to use Nessie\'s Merchant APIs!')
@@ -69,6 +110,21 @@ def main():
 
     for mer in mers:
         print(mer.to_dict())
+
+    print('Now getting merchant by id')
+    _id = mers.pop().merchant_id
+
+    merch = req.get_merchant_by_id(_id)
+    print(merch.to_dict())
+
+    print("Now attempting to post a merchant")
+    name = 'George\'s House of Wares'
+    category = 'Uncategorical'
+    addr = Address("123", "Appian Way", "Rome", "NY", "14850")
+    geocode = {"lat": 0, "lng": 0}
+    creatMerch = req.create_merchant(name, category, addr, geocode)
+
+    print(creatMerch.to_dict())
     
     
 if __name__ == '__main__':

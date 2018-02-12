@@ -23,6 +23,7 @@ class Merchant:
         return_dict['name'] = self.name
         return_dict['category'] = self.category
         return_dict['geocode'] = self.geocode
+        return_dict['_id'] = self.merchant_id
         if (self.address is not None):
             return_dict['address'] = self.address.to_dict()
         return return_dict
