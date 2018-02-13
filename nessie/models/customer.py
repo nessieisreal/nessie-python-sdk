@@ -26,3 +26,6 @@ class Customer:
             "last_name": self.last_name,
             "address": self.address.to_dict()
         }
+        
+    def __eq__(self, other):
+        return self.to_dict() == other.to_dict()

@@ -14,3 +14,6 @@ class Address:
             "state": self.state,
             "zip": self.zipcode
             }
+    
+    def __eq__(self, other):
+        return self.to_dict() == other.to_dict()

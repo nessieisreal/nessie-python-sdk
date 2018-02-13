@@ -2,9 +2,10 @@ import requests
 import json
 import re
 
-from nessie.models.customer import Customer
-from nessie.utils.exceptions import CustomerValidationError, NessieApiError, AddressValidationError
-from nessie import utils
+
+from .models.customer import Customer
+from .utils.exceptions import CustomerValidationError, NessieApiError, AddressValidationError
+from . import utils
 
 class CustomerRequests:
 
@@ -56,7 +57,6 @@ class CustomerRequests:
     def create_customer(self, first_name: str, last_name: str, address):
         if first_name is None or last_name is None:
             raise CustomerValidationError(utils.constants.createCustomerMissingFields)
-
         val_address = validate_address(address)
         if val_address != utils.constants.success:
             raise AddressValidationError(val_address)
@@ -66,7 +66,7 @@ class CustomerRequests:
         body = {
             "first_name": first_name,
             "last_name": last_name,
-            "address": address.to_dict()
+            "address": address
         }
         r = requests.post(utils.constants.customersUrl, headers=header, params=payload, data=json.dumps(body))
         if r.status_code != 201:
@@ -80,17 +80,21 @@ class CustomerRequests:
         return created_customer
 
     # Updates a customer's address based on CustomerId
+    # weird can only change address not first/last name
     def update_customer(self, customer_id, new_address):
         if customer_id is None:
             raise CustomerValidationError(utils.constants.customerIdMissingField)
-
+        
+        # needs check because otherwise
+        # if you set new city (or any one field of address)
+        # but not the rest it sets the other address fields to none
         val_address = validate_address(new_address)
         if val_address != utils.constants.success:
             raise AddressValidationError(val_address)
 
         header = {"Content-Type": "application/json"}
         payload = {"key": self.key}
-        body = {"address": new_address.to_dict()}
+        body = {'address':new_address}
         url = utils.constants.customersIdUrl % customer_id
         r = requests.put(url, headers=header, params=payload, data=json.dumps(body))
         if r.status_code != 202:
@@ -102,6 +106,6 @@ class CustomerRequests:
 def validate_address(address):
     if address is None:
         return utils.constants.addressMissingField
-    elif re.fullmatch(r"^[0-9]{5}$", address.zipcode) is None:
+    elif re.fullmatch(r"^[0-9]{5}$", address['zip']) is None:
         return utils.constants.addressValidationZipCode
     return utils.constants.success

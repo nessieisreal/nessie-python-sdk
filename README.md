@@ -39,7 +39,7 @@ Install python 3.6.2 or greater
 Setup virtual python environment
 
     pip install pipenv
-    pipenv install
+    pipenv install --dev
 
 To add packages
 
@@ -50,6 +50,11 @@ More info about pipenv: http://python-docs.readthedocs.io/en/latest/dev/virtuale
 To run test package
 
     pipenv run python ./src/atmRequests.py
+    
+To test locally
+
+    python3 -m unittest
+    pylint --disable=R,C nessie
 
 
 ## Deploying to pip
