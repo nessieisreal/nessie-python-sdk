@@ -3,7 +3,7 @@ import requests
 from .utils.constants import baseUrl
 from .utils.exceptions import NessieApiError
 
-class DataRequests():
+class DataRequest():
     def __init__(self,api_key):
         self.key = api_key
 
@@ -20,6 +20,3 @@ class DataRequests():
             raise NessieApiError(response)
         result = response.json()
         return result
-
-
-    

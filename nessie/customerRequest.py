@@ -6,7 +6,7 @@ from nessie.models.customer import Customer
 from nessie.utils.exceptions import CustomerValidationError, NessieApiError, AddressValidationError
 from nessie import utils
 
-class CustomerRequests:
+class CustomerRequest:
 
     def __init__(self, api_key):
         self.key = api_key

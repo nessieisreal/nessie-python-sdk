@@ -3,9 +3,9 @@ import sys, os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,path+'/../')
 
-from nessie.accountRequests import AccountRequests
-from nessie import billRequests
-from nessie.dataRequests import DataRequests
+from nessie.accountRequest import AccountRequest
+from nessie.billRequest import BillRequest
+from nessie.dataRequest import DataRequest
 from nessie.utils.exceptions import NessieApiError
 
 # def test_create_bill(self):
@@ -23,7 +23,7 @@ account_id = '5a5471796514d52c7774a2cb'
 class TestBillRequests(unittest.TestCase):
     # create some dummy bills
     def setUp(self):
-        bill_factory = billRequests.BillRequest(wkey)
+        bill_factory = BillRequest(wkey)
         bill = bill_factory.create_bill(account_id,
             status='pending',
             payee='bobby',
@@ -34,13 +34,13 @@ class TestBillRequests(unittest.TestCase):
         )
 
     def tearDown(self):
-        data_deletor = DataRequests(wkey)
+        data_deletor = DataRequest(wkey)
 
 
     # try fetching a bill that doesn't exist
     def test_get_nonreal_bill_fail(self):
         print("test_get_nonreal_bill_fail")
-        bill_factory = billRequests.BillRequest(wkey)
+        bill_factory = BillRequest(wkey)
         
         
         expected_status_code = 404

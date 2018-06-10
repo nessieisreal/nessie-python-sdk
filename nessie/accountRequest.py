@@ -2,7 +2,7 @@ import requests, json, urlConstants
 from .models.account import Account
 from .utils.exceptions import NessieApiError
 
-class AccountRequests:
+class AccountRequest:
     def __init__(self, apiKey):
         self.key = apiKey
 
@@ -60,7 +60,7 @@ class AccountRequests:
         r = requests.post(urlConstants.CUSTOMERS_ID_URL % customerId, headers=header, params=payload, data=json.dumps(body))
         data = r.json()
         if data.get("code") != 201:
-            raise NessieApiError(r.text)
+            raise NessieApiError(r)
         return Account.fromJson(data.get("objectCreated"))
 
     def update_account(self, accountId, nickname, account_number=None):
@@ -85,4 +85,3 @@ class AccountRequests:
         data = r.json()
         if data.get("code") != 202:
             raise NessieApiError(r.text)
-
