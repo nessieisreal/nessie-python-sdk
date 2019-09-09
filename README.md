@@ -33,6 +33,7 @@ TODO
 
 
 ## Development Setup
+## Development Setup
 
 Install python 3.6.2 or greater
 
@@ -41,15 +42,26 @@ Setup virtual python environment
     pip install pipenv
     pipenv install
 
-To add packages
+Since the stable version of this SDK is not pushed to the Python Package Index (PyPI), you will need to install it from this repository. Don't worry! You'll just need a few more `pip` commands and you'll be fine. Follow the steps below.
+
+### Installation
+
+First, clone this repository to somewhere you want to start your project, or where you'll remember where you cloned it.
+
+```
+$ git clone https://github.com/nessieisreal/nessie-python-sdk.git
+```
+Now we will package this project so you can import it elsewhere on your computer:
+```
+$ python3 -m pip install -e ./nessie-python-sdk/
+```
+Now, normally you would simply do `$ pip install nessie`, but since this project
+ is not on PyPI yet, we cant directly do that. We have to tell pip to use a local
+ project and use that as a package, so we can`import nessie` in other Python files.
 
 
-More info about pipenv: http://python-docs.readthedocs.io/en/latest/dev/virtualenvs.html
 
 
-To run test package
-
-    pipenv run python ./src/atmRequests.py
 
 
 ## Deploying to pip
